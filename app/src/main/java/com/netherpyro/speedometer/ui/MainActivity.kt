@@ -13,6 +13,7 @@ import com.netherpyro.speedometer.ISpeedGeneratorCallback
 import com.netherpyro.speedometer.ISpeedGeneratorService
 import com.netherpyro.speedometer.R
 import com.netherpyro.speedometer.generator.SpeedGeneratorService
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ServiceConnection {
 
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         service = ISpeedGeneratorService.Stub.asInterface(binder)
 
         try {
+            speedometerView.maxValue = service?.maxSpeed ?: -1.0
+            tachometerView.maxValue = service?.maxRpm ?: -1.0
             service?.registerCallback(generatorCallback)
         } catch (e: RemoteException) {
             Log.e(TAG, "onServiceConnected::register callback failed", e)
@@ -86,10 +89,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     }
 
     fun onGeneratorSpeedValue(value: Double) {
-        Log.v(TAG, "onGeneratorSpeedValue::$value")
+        speedometerView.currentValue = value
     }
 
     fun onGeneratorRpmValue(value: Double) {
-        Log.v(TAG, "onGeneratorRpmValue::$value")
+        tachometerView.currentValue = value
     }
 }

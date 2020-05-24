@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpeedometerView">
+        <attr name="rimColor" format="color" />
+        <attr name="centerCircleColor" format="color" />
+        <attr name="markColor" format="color" />
+        <attr name="valueColor" format="color" />
+        <attr name="needleColor" format="color" />
+        <attr name="label" format="string" />
+        <attr name="value_text_size" format="dimension" />
+        <attr name="label_text_size" format="dimension" />
+        <attr name="mark_division_value" format="integer" />
+        <attr name="divide_value_by_division" format="boolean" />
+        <attr name="draw_intermediate_mark" format="boolean" />
+    </declare-styleable>
+</resources>

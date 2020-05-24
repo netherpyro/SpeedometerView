@@ -5,8 +5,8 @@ import com.netherpyro.speedometer.ISpeedGeneratorCallback;
 
 interface ISpeedGeneratorService {
 
-    int getMaxSpeed();
-    int getMaxRpm();
+    double getMaxSpeed();
+    double getMaxRpm();
 
     void registerCallback(ISpeedGeneratorCallback callback);
     void ungisterCallback();

@@ -6,12 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView android:layout_width="wrap_content"
+    <com.netherpyro.speedometer.ui.SpeedometerView android:id="@+id/speedometerView"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:background="@android:color/black"
+        android:padding="8dp"
+        app:mark_division_value="20"
+        app:rimColor="#ffdb9960"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.netherpyro.speedometer.ui.SpeedometerView android:id="@+id/tachometerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:padding="8dp"
+        app:mark_division_value="1000"
+        app:divide_value_by_division="true"
+        app:value_text_size="20sp"
+        app:draw_intermediate_mark="false"
+        app:label="x1000r/min"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speedometerView"
+        app:markColor="@color/colorPrimaryDark"
+        app:needleColor="@color/colorAccent"
+        app:rimColor="@color/colorPrimary"
+        app:centerCircleColor="@color/colorPrimary"
+        app:valueColor="@color/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

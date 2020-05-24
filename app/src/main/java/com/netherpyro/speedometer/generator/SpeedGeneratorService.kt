@@ -15,16 +15,16 @@ import kotlin.math.sin
  */
 class SpeedGeneratorService : Service() {
 
-    private val maxKmH = 120
-    private val maxRPM = 8000
+    private val maxKmH = 190.0
+    private val maxRPM = 8000.0
 
     private lateinit var thread: SpeedGeneratorThread
 
     private val binder = object : ISpeedGeneratorService.Stub() {
 
-        override fun getMaxSpeed(): Int = maxKmH
+        override fun getMaxSpeed(): Double = maxKmH
 
-        override fun getMaxRpm(): Int = maxRPM
+        override fun getMaxRpm(): Double = maxRPM
 
         override fun registerCallback(callback: ISpeedGeneratorCallback?) {
             thread.requestRegisterCallback(callback)
@@ -54,8 +54,8 @@ class SpeedGeneratorService : Service() {
 
     @Suppress("PrivatePropertyName")
     private class SpeedGeneratorThread(
-            private val maxKmh: Int,
-            private val maxRpm: Int
+            private val maxKmh: Double,
+            private val maxRpm: Double
     ) : HandlerThread("SpeedGeneratorThread"), Handler.Callback {
 
         private val START = 0
@@ -124,7 +124,7 @@ class SpeedGeneratorService : Service() {
                 var currentFrameRad = frameRad
                 val amplitude = maxKmh / 2
                 while (running) {
-                    val value = amplitude + amplitude * sin(0.5 * currentFrameRad)
+                    val value = amplitude + amplitude * sin(0.1 * currentFrameRad)
 
                     callback?.onSpeedValue(value)
 
@@ -137,7 +137,7 @@ class SpeedGeneratorService : Service() {
                 var currentFrameRad = frameRad
                 val amplitude = maxRpm / 2
                 while (running) {
-                    val value = amplitude + amplitude * sin(0.5 * currentFrameRad)
+                    val value = amplitude + amplitude * sin(0.2 * currentFrameRad)
 
                     callback?.onRpmValue(value)
 
