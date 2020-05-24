@@ -75,6 +75,7 @@ class SpeedometerView @JvmOverloads constructor(
     private val endDeg = startDeg + sweepDeg
 
     private var markDegSpan = 0f
+    private var side = 0
     private var centerX = 0f
     private var centerY = 0f
 
@@ -163,8 +164,7 @@ class SpeedometerView @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        val side = min(measuredWidth, measuredHeight)
-
+        side = min(measuredWidth, measuredHeight)
         centerX = side / 2f
         centerY = side / 2f
 
@@ -186,8 +186,6 @@ class SpeedometerView @JvmOverloads constructor(
         needlePath.reset()
         needlePath.moveTo(centerX, paddingTop.toFloat())
         needlePath.lineTo(centerX, centerY + centerCircleRadius + context.dpToPx(8f))
-
-        setMeasuredDimension(side, side)
     }
 
     private fun invalidateMarkDegreeSpan() {
@@ -195,10 +193,18 @@ class SpeedometerView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        if (height > side) {
+            canvas.translate(0f, (height - side) / 2f)
+        }
+
+        if (width > side) {
+            canvas.translate((width - side) / 2f, 0f)
+        }
+
         // draw static
         canvas.drawPath(rimPath, rimPaint)
         canvas.drawCircle(centerX, centerY, centerCircleRadius, centerCirclePaint)
-        canvas.drawText(labelText, centerX, measuredHeight - centerY / 3f, labelTextPaint)
+        canvas.drawText(labelText, centerX, side - centerY / 3f, labelTextPaint)
 
         // draw marks
         canvas.save()
