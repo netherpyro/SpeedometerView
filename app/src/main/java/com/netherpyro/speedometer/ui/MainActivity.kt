@@ -3,6 +3,7 @@ package com.netherpyro.speedometer.ui
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
@@ -10,6 +11,8 @@ import android.os.RemoteException
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.netherpyro.speedometer.ISpeedGeneratorCallback
 import com.netherpyro.speedometer.ISpeedGeneratorService
@@ -51,6 +54,33 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
                     true
                 } else false
+    }
+
+    private lateinit var fullscreenFlags: IntArray
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        with(window) {
+            fullscreenFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+                    decorView.rootWindowInsets?.displayCutout != null) {
+                intArrayOf(
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                )
+            } else {
+                intArrayOf(
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN,
+                        View.SYSTEM_UI_FLAG_FULLSCREEN,
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                )
+            }
+
+
+            decorView.systemUiVisibility = decorView.systemUiVisibility or fullscreenFlags.reduce { acc, i -> acc or i }
+            addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

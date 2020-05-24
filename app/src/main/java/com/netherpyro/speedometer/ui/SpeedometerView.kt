@@ -31,6 +31,9 @@ class SpeedometerView @JvmOverloads constructor(
     private var centerCircleColor: Int = Color.DKGRAY
 
     @ColorInt
+    private var mainCircleColor: Int = Color.BLACK
+
+    @ColorInt
     private var markColor = Color.WHITE
 
     @ColorInt
@@ -52,10 +55,11 @@ class SpeedometerView @JvmOverloads constructor(
     private var valueTextSize = context.spToPx(defTextSize)
     private var labelTextSize = context.spToPx(defTextSize)
 
-    private val rimPaint = Paint()
-    private val markPaint = Paint()
-    private val needlePaint = Paint()
-    private val centerCirclePaint = Paint()
+    private val rimPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val markPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val needlePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val centerCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val valueTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val labelTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
@@ -105,6 +109,8 @@ class SpeedometerView @JvmOverloads constructor(
                     rimColor)
             centerCircleColor = typedArray.getColor(R.styleable.SpeedometerView_centerCircleColor,
                     centerCircleColor)
+            mainCircleColor = typedArray.getColor(R.styleable.SpeedometerView_mainCircleColor,
+                    mainCircleColor)
             markColor = typedArray.getColor(R.styleable.SpeedometerView_markColor,
                     markColor)
             textValueColor = typedArray.getColor(R.styleable.SpeedometerView_valueColor,
@@ -159,6 +165,11 @@ class SpeedometerView @JvmOverloads constructor(
             textSize = labelTextSize
             textAlign = Paint.Align.CENTER
         }
+
+        backgroundPaint.apply {
+            style = Paint.Style.FILL
+            color = mainCircleColor
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -202,6 +213,7 @@ class SpeedometerView @JvmOverloads constructor(
         }
 
         // draw static
+        canvas.drawCircle(centerX, centerY, arcRectF.height() / 2f, backgroundPaint)
         canvas.drawPath(rimPath, rimPaint)
         canvas.drawCircle(centerX, centerY, centerCircleRadius, centerCirclePaint)
         canvas.drawText(labelText, centerX, side - centerY / 3f, labelTextPaint)

@@ -3,6 +3,7 @@
     <declare-styleable name="SpeedometerView">
         <attr name="rimColor" format="color" />
         <attr name="centerCircleColor" format="color" />
+        <attr name="mainCircleColor" format="color" />
         <attr name="markColor" format="color" />
         <attr name="valueColor" format="color" />
         <attr name="needleColor" format="color" />
