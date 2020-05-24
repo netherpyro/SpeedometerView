@@ -11,22 +11,23 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         app:mark_division_value="20"
+        app:mainCircleColor="#272727"
         app:rimColor="#ffdb9960" />
 
     <com.netherpyro.speedometer.ui.SpeedometerView android:id="@+id/tachometerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        app:centerCircleColor="@color/colorPrimary"
+        app:centerCircleColor="#000AFF"
         app:divide_value_by_division="true"
         app:draw_intermediate_mark="false"
-        app:mainCircleColor="@android:color/holo_purple"
+        app:mainCircleColor="#121524"
         app:label="x1000r/min"
-        app:markColor="@color/colorPrimaryDark"
+        app:markColor="@android:color/white"
         app:mark_division_value="1000"
-        app:needleColor="@color/colorAccent"
-        app:rimColor="@color/colorPrimary"
-        app:valueColor="@color/colorAccent"
+        app:needleColor="@android:color/white"
+        app:rimColor="#000AFF"
+        app:valueColor="@android:color/white"
         app:value_text_size="20sp" />
 
 </FrameLayout>

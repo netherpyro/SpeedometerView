@@ -144,8 +144,7 @@ class SpeedometerView @JvmOverloads constructor(
         }
 
         needlePaint.apply {
-            style = Paint.Style.STROKE
-            strokeWidth = needleWidth
+            style = Paint.Style.FILL
             color = needleColor
         }
 
@@ -195,8 +194,14 @@ class SpeedometerView @JvmOverloads constructor(
         markPath.lineTo(centerX, paddingTop + markHeight)
 
         needlePath.reset()
-        needlePath.moveTo(centerX, paddingTop.toFloat())
-        needlePath.lineTo(centerX, centerY + centerCircleRadius + context.dpToPx(8f))
+        needlePath.moveTo(centerX, paddingTop.toFloat() + rimWidth / 2f)
+        val needleBottomY = centerY + centerCircleRadius + context.dpToPx(8f)
+        val needleTriangleBottomY = paddingTop.toFloat() + rimWidth * 1.1f
+        needlePath.lineTo(centerX - needleWidth / 2f, needleTriangleBottomY)
+        needlePath.lineTo(centerX - needleWidth / 2f, needleBottomY)
+        needlePath.lineTo(centerX + needleWidth / 2f, needleBottomY)
+        needlePath.lineTo(centerX + needleWidth / 2f, needleTriangleBottomY)
+        needlePath.close()
     }
 
     private fun invalidateMarkDegreeSpan() {
